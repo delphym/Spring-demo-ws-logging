@@ -9,26 +9,31 @@ public class Message {
 		this.app = app;
 		this.level = level;
 		this.message = message;
-		this.setId(id);
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getApp() {
+	public long getId(){
+		return id;
+	}
+
+	public String getApp() throws NullPointerException {
+		if (this.isBlank(app) || app == null) {
+			throw new NullPointerException("Ivalid request: APP canot be NULL or 'empty'");
+		}
 		return app;
 	}
 
-	public String getLevel() {
+	public String getLevel() throws NullPointerException {
+		if (this.isBlank(level) || level == null ) {
+			throw new NullPointerException("Ivalid request: LEVEL canot be NULL or 'empty'");
+		}
 		return level.toUpperCase();
 	}
 
-	public String getMessage() {
+	public String getMessage() throws NullPointerException {
+		if (this.isBlank(message) || message == null) {
+			throw new NullPointerException("Ivalid request: MESSAGE canot be NULL or 'empty'");
+		}
 		return message;
 	}
 	
@@ -41,4 +46,18 @@ public class Message {
 		return "[app: " + this.getApp() +  ", message: " + this.getMessage() + "]";
 	}
 
+	public boolean isBlank(String s) {
+		char ch [] = s.toCharArray();
+		int count = 0;
+		for (int i = 0; i < ch.length; i++) {
+			if (Character.isWhitespace(ch[i])) {
+				count++;
+			}
+		}
+		if (count == ch.length) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
